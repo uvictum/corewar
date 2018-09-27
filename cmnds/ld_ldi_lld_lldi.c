@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:05:03 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/26 18:25:20 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 16:24:29 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,103 +14,89 @@
 
 unsigned int			ld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
-	unsigned int 		*args;
+	t_arg		 		*args;
 	unsigned int 		pos;
 	unsigned int 		ret;
 
-	args = ft_memalloc(sizeof(unsigned int ) * 2);
+	args = ft_memalloc(sizeof(t_arg) * 2);
 	ret = get_args(proc, args, type, map);
 	{
 		if (type[0] == T_DIR)
-			proc->reg[args[1]] = arg[0];
+			proc->reg[args[1].obts[0]] = arg[0].tbts[0];
 		else if (type[0] == T_IND)
-		{
-			args[0] =% IDX_MOD;
-			pos = proc->pos + (short)args[0];
-			if (pos >= MEM_SIZE)
-				pos = 0 + MEM_SIZE - pos;
-			ft_memcpy((void*)proc->reg[(unsigned char)args[1]], (const void*)&map[pos], T_IND);
-	//		proc->reg[(unsigned char)args[1]] = ft_swapuint(proc->reg[(unsigned char)args[1]]);
-		}
+			proc->reg[args[1].obts[0]] = arg[0].qbt;
 	}
-	check_carry(args[1], proc);
+	check_carry(proc->reg[args[1].obts[0]], proc);
 	free(args);
 	return (ret);
 }
 
 unsigned int			ldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
-	unsigned int		*args;
+	t_arg				*args;
 	int 				res;
 	unsigned int 		ret;
+	t_arg				buf;
 
-	args = ft_memalloc(sizeof(unsigned int ) * 3);
+	res = 0;
+	args = ft_memalloc(sizeof(t_arg) * 3);
 	ret = get_args(proc, args, type, map);
-	if (type[0] == T_IND)
-	{
-		ft_memcpy((void*)args[0], (const void*)&map[((short)(args[0] % IDX_MOD)) + proc->pos], T_IND); // define behav when pos < 0	
-	}
 	if (type[0] == T_DIR)
-		res += (short)arg[0];
+		res += arg[0].tbts[0];
 	else
-		res += arg[0];
+		res += arg[0].qbt;
 	if (type[1] == T_DIR)
-		res += (short)arg[1];
+		res += arg[1].tbts[0];
 	else
-		res += arg[1];
-	ft_memcpy((void*)proc->reg[arg[2]], (const void *)&map[res % IDX_MOD], 4);
-//	proc->reg[arg[2]] = ft_swapuint(proc->reg[arg[2]]);
+		res += arg[1].qbt;
+	ft_read_mem(&buf, map, 4, (res % IDX_MOD));
+	proc->reg[arg[2].obts[0]] = ft_swapuint(buf.qbt);
 	free(args);
 	return (ret);
 }
 
 unsigned int				lld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
-	unsigned int 		*args;
-	unsigned int 		pos;
+	t_arg		 		*args;
 	unsigned int 		ret;
+	t_arg				buf;
 
-	args = ft_memalloc(sizeof(unsigned int ) * 2);
+	args = ft_memalloc(sizeof(t_arg) * 2);
 	ret = get_args(proc, args, type, map);
 	{
 		if (type[0] == T_DIR)
-			proc->reg[(unsigned char)args[1]] = arg[0];
+			proc->reg[args[1].obts[0]] = args[0].qbt;
 		else
 		{
-			pos = proc->pos + (short)args[0]; //  ВЫНЕСТИ В ОТДЕЛЬНУЮ ФУНКЦИЮ
-			if (pos >= MEM_SIZE) //
-				pos = 0 + MEM_SIZE - pos; //
-			ft_memcpy((void*)proc->reg[(unsigned char)args[1]], (const void*)&map[pos], T_IND); //
-			proc->reg[(unsigned char)args[1]] = ft_swapuint(proc->reg[(unsigned char)args[1]]);
+			ft_read_mem(&buf, map, T_IND, proc->pos + args[0].tbts[0]); //>>> original is not correct
+			proc->reg[args[1].obts[0]] = ft_swapuint(buf.qbt);
 		}
 	}
-	check_carry(args[1], proc);
+	check_carry(proc->reg[args[1].obts[0]], proc);
 	free(args);
 	return (ret);
 }
 
 unsigned int lldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
-	unsigned int		*args;
+	t_arg				*args;
 	int 				res;
 	unsigned int 		ret;
+	t_arg				buf;
 
-	args = ft_memalloc(sizeof(unsigned int ) * 3);
+	res = 0;
+	irgs = ft_memalloc(sizeof(t_arg) * 3);
 	ret = get_args(proc, args, type, map);
-	if (type[0] == T_IND)
-	{
-		ft_memcpy((void*)args[0], (const void*)&map[((short)(args[0]) % IDX_MOD) + proc->pos], T_IND); // define behav when pos < 0	
-	}
 	if (type[0] == T_DIR)
-		res += (short)arg[0];
+		res += arg[0].tbts[0];
 	else
-		res += arg[0];
+		res += arg[0].qbt;
 	if (type[1] == T_DIR)
-		res += (short)arg[1];
+		res += arg[1].tbts[0];
 	else
-		res += arg[1];
-	ft_memcpy((void*)proc->reg[arg[2]], (const void *)&map[res], 4);
-//	proc->reg[arg[2]] = ft_swapuint(proc->reg[arg[2]]);
+		res += arg[1].qbt;
+	ft_read_mem(&buf, map, 4, res);
+	proc->reg[arg[2].obts[0]] = ft_swapuint(buf.qbt);
 	free(args);
 	return (ret);
 }

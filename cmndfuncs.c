@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/26 18:52:03 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 17:11:57 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 void	ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem)
 {
 	prcs->pos += move;
-	if (prcs->pos >= MEM_SIZE)
-		prcs->pos = 0 + (MEM_SIZE - prcs->pos);
+	while (prcs->pos >= MEM_SIZE)
+		prcs->pos -= MEM_SIZE;
 }
 
 unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)

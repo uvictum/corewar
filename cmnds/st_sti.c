@@ -6,50 +6,45 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:07:17 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/26 18:25:07 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 16:39:21 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-unsigned int st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
+unsigned int		st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
 	unsigned int 	ret;
-	unsigned int	*args;
+	t_args			*args;
 
-	args = ft_memalloc(sizeof(unsigned int) * 2);
+	args = ft_memalloc(sizeof(t_args) * 2);
 	ret = get_args(proc, args, type, map);
 	if (type[1] == T_IND)
-		ft_memcpy((void*)&map[proc->pos + (arg[1] % IDX_MOD)], (const void*)args[0], 4);
+		ft_write_mem(&args[0], map, T_IND, args[1].qbt)
 	if (type[1] == T_REG)
-		proc->reg[args[1]] = args[0];
+		proc->reg[args[1].obts[0]] = args[0].qbt;
 	free(args);
 	return (ret);
 }
 
-unsigned int sti(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
+unsigned int 		sti(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
 	int			 	pos;
 	unsigned int	ret;
-	unsigned int	*args;
+	t_arg			*args;
 
-	pos = 0;
+	pos = (int)proc->pos;
 	args = ft_memalloc(sizeof(unsigned int) * 2);
 	ret = get_args(prec, c, type, map);
-	if (type[1] == T_IND)
-	{
-		ft_memcpy((void*)args[1], (const void*)&map[((short)(args[1]) % IDX_MOD) + proc->pos], T_IND); // define behav when pos < 0
-		pos += args[1];
-	}
 	if (type[1] == T_DIR)
-		pos += (short)arg[1];
+		pos += arg[1].tbts[0];
 	else
-		pos += arg[1];
+		pos += arg[1].qbt;
 	if (type[2] == T_DIR)
-		pos += (short)arg[2];
+		pos += arg[2].tbts[0];
 	else
-		pos += arg[2];
-	ft_memcpy((void*)&map[proc->pos + (pos % IDX_MOD)], (const void *)&arg[0], 4);
-//ft_swapuint(proc->reg[arg[2]]); ?????
+		pos += arg[2].qbt;
+	ft_write_mem(&arg[0], map, 4, pos % IDX_MOD);
+	free(args);
 	return (ret);	
 }

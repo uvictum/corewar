@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/26 16:34:10 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/26 20:04:21 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ union					chmp_exec {
 };
 
 typedef union			s_arg {
-	unsigned char		bts[4];
+	unsigned char		obts[4];
 	unsigned int		qbt;
 	short				tbts[2];
 }						t_arg;
