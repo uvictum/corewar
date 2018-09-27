@@ -6,13 +6,13 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:00:59 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/27 16:43:38 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 17:31:27 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-unsigned int and(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
+unsigned int ft_and(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
 	t_arg		 *args;
 	unsigned int ret;
@@ -25,7 +25,7 @@ unsigned int and(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	return (ret);
 }
 
-unsigned int or(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
+unsigned int ft_or(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
 	t_arg		 *args;
 	unsigned int ret;
@@ -38,7 +38,7 @@ unsigned int or(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	return (ret);
 }
 
-unsigned int xor(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
+unsigned int ft_xor(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
 	t_arg		 *args;
 	unsigned int ret;

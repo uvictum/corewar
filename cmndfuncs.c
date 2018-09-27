@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/27 17:11:57 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:19:20 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
 	t_arg_type *args;
 	int			res;
 
-	if (op_tab[prcs->pos]->codage)
-		args = ft_byte_decode(mem[prcs->pos + 1], op_tab[prcs->pos - 1]->arg_qnt);
+	if (op_tab[prcs->pos].codage)
+		args = ft_byte_decode(mem[prcs->pos + 1], op_tab[prcs->pos - 1].arg_qnt);
 	if (!args)
 		return (1);
-	res = ft_validate_targs(args, op_tab[prcs->pos - 1]->args, op_tab[prcs->pos-1]->label);
+	res = ft_validate_targs(args, op_tab[prcs->pos - 1].args, op_tab[prcs->pos-1].label);
 	if (!res)
-		res = p->func[prcs->cmnd - 1](prcs, p, args, mem);
+		res = funcs[prcs->cmnd - 1](prcs, p, args, mem);
 	prcs->cmnd = 0;
 	free(args);
 	return ((unsigned int)res);

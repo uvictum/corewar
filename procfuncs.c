@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/27 17:11:54 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:06:30 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,9 @@ t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 
 void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 {
+	int		moves;
+
+	moves = 0;
 	while(prcs)
 	{
 		if (prcs->cycles_to_do > 0)
@@ -97,12 +100,12 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 				moves = 1;
 				if (prcs->cmnd <= 15)
 					moves = ft_call_cmnd(prcs, p, mem);
-				ft_move_proc(prcs, p, mem, moves);
+				ft_move_proc(prcs, moves, mem);
 			}
 			else
 			{
 				prcs->cmnd = mem[prcs->pos];
-				prcs->cycles_to_do = op_tab[prcs->pos - 1]->cycles_to_do;
+				prcs->cycles_to_do = op_tab[prcs->pos - 1].cycles_to_do;
 				prcs->cycles_to_do--;
 			}
 		}

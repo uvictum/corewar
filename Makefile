@@ -4,7 +4,7 @@ CFLAGS=  -g  -I./lib
 
 NAME = corewar
 
-FILES = corewar argreader binfuncs memfuncs procfuncs
+FILES = corewar argreader binfuncs memfuncs procfuncs cmnds/add_sub cmnds/get_args cmnds/live_zjmp_fork_lfork_aff cmnds/and_or_xor cmnds/ld_ldi_lld_lldi cmnds/st_sti 
 
 SRC= $(addsuffix .c, $(FILES))
 

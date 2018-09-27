@@ -6,13 +6,11 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/27 17:11:50 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:04:59 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <op.h>
-#include <op.c>
-#include <cor.h>
+#include "corewar.h"
 
 void check_carry(unsigned int arg, t_proc *proc)
 {

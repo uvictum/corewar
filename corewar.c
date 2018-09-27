@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/11 19:08:07 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/18 18:24:32 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:18:13 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int		main(int argc, char **argv)
 	{
 		p->players = res; // записываем количество чемпионов
 		prcs = ft_init_proc(p, mem, res);
+		p->lastpid = res;
+		p->prcs = prcs;
 		ft_memdumper(&mem[0]);
 	}
 	else
@@ -47,11 +49,9 @@ t_prog	*ft_init_prog(void)
 {
 	t_prog	*p;
 	int		i;
-	
 
 	i = 0;
 	p = ft_memalloc(sizeof(t_prog));
-	p->func = {&fork, .. &aff}; /// записать все функции которые будут
 	while (i < MAX_PLAYERS)
 	{
 		p->player_nbr[i] = ((i + 1) * -1);

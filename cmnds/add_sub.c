@@ -6,13 +6,11 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:03:45 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/27 16:40:59 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:04:37 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <op.h>
-#include <op.c>
-#include <cor.h>
+#include "corewar.h"
 
 unsigned int add(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {

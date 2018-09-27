@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/26 20:04:21 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:17:56 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@
 #include "get_next_line.h"
 #include <stdbool.h>
 
-# define PRFX 1
-# define DEAD 0
-# define ALL 1
+# define PRFX			1
+# define DEAD 			0
+# define ALL			1
+# define T_REG_SIZE		1
+# define T_DIR_SIZE		2
+# define T_IND_SIZE		2
 
 union					chmp_exec {
 	unsigned char		obts[CHAMP_MAX_SIZE];
@@ -57,23 +60,28 @@ typedef struct			s_prog {
 	unsigned int		nbr_cycles;
 	int					player_nbr[MAX_PLAYERS];
 	t_champ				champs[MAX_PLAYERS];
-	unsigned int		(*funcs[16])(*t_proc, *t_prog, *t_arg_type, *unsigned char);
 	int					lives[MAX_PLAYERS];
 	int					players;
 	int					checks_nbr;
 	short				last_live_nbr;
+	t_proc				*prcs;
+	unsigned int		lastpid;
 }						t_prog;
+
+
 
 typedef struct			s_op {
 	char				*name;
 	int					arg_qnt;
-	t_arg_type			*args;
+	t_arg_type			args[3];
 	int					num;
 	int					cycles_to_do;
 	char				*description;
 	int					codage;
 	int					label;
 }						t_op;
+
+typedef	unsigned int	(*t_func)(t_proc*, t_prog*, t_arg_type*, unsigned char*);
 
 t_op    op_tab[17] =
 {
@@ -118,11 +126,32 @@ t_proc					*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr);
 t_proc					*ft_add_proc(t_proc *prcs, t_proc *newproc);
 t_prog					*ft_init_prog(void);
 void					ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem);
-unsigned int			ft_call_cmnd(t_proc *prcs, t_ptog *p, unsigned char *mem);
+unsigned int			ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem);
 t_arg_type				*ft_byte_decode(unsigned char code_bt, int arg_qnt);
 unsigned int			ft_validate_targs(t_arg_type *code, t_arg_type *cmnd, int arg_qnt, char label_size);
 void					ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p);
 t_champ					ft_machine(t_prog *p, t_proc *prcs, unsigned char *mem);
 int						ft_change_cycles(t_prog *p, int cycles_to_die);
+void 					check_carry(unsigned int arg);
+unsigned int 			get_args(t_proc *proc, unsigned int *arg, t_arg_type *type, unsigned char *map);
+unsigned int 			add(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			sub(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			ft_and(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			ft_or(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			ft_xor(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int			ld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			ldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int			lld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			lldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int			live(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int			zjmp(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int			ft_fork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int			lfork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			aff(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+unsigned int 			sti(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+
+
+t_func funcs[16] = {&live, &ld, &st, &add, &sub, &ft_and, &ft_or, &ft_xor, &zjmp, &ldi, &sti, &ft_fork, &lld, &lldi, &lfork, &aff};
 
 #endif

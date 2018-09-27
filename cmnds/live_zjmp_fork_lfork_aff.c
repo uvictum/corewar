@@ -6,13 +6,11 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:10:21 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/27 17:11:35 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/27 18:05:24 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <op.h>
-#include <op.c>
-#include <cor.h>
+#include "corewar.h"
 
 unsigned int				live(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
@@ -35,7 +33,7 @@ unsigned int				zjmp(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *m
 	return (0);
 }
 
-unsigned int				fork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
+unsigned int		ft_fork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
 	t_arg	dir;
 
