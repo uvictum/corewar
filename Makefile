@@ -1,10 +1,22 @@
 CC= clang
 
-CFLAGS=  -g  -I./lib 
+CFLAGS=  -g  -I. -Ilib
 
 NAME = corewar
 
-FILES = corewar argreader binfuncs memfuncs procfuncs cmnds/add_sub cmnds/get_args cmnds/live_zjmp_fork_lfork_aff cmnds/and_or_xor cmnds/ld_ldi_lld_lldi cmnds/st_sti 
+FILES = corewar \
+		argreader \
+	   	binfuncs \
+	   	memfuncs \
+		machine \
+		cmndfuncs \
+	   	procfuncs \
+		add_sub \
+		get_args \
+		live_zjmp_fork_lfork_aff \
+	   	and_or_xor \
+		ld_ldi_lld_lldi \
+		st_sti
 
 SRC= $(addsuffix .c, $(FILES))
 

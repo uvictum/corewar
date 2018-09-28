@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/27 18:17:56 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/28 17:45:59 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct			s_op {
 
 typedef	unsigned int	(*t_func)(t_proc*, t_prog*, t_arg_type*, unsigned char*);
 
-t_op    op_tab[17] =
+static t_op    op_tab[17] =
 {
 	{"live", 1, {T_DIR}, 1, 10, "alive", 0, 0},
 	{"ld", 2, {T_DIR | T_IND, T_REG}, 2, 5, "load", 1, 0},
@@ -130,10 +130,10 @@ unsigned int			ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem);
 t_arg_type				*ft_byte_decode(unsigned char code_bt, int arg_qnt);
 unsigned int			ft_validate_targs(t_arg_type *code, t_arg_type *cmnd, int arg_qnt, char label_size);
 void					ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p);
-t_champ					ft_machine(t_prog *p, t_proc *prcs, unsigned char *mem);
+t_champ					ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem);
 int						ft_change_cycles(t_prog *p, int cycles_to_die);
-void 					check_carry(unsigned int arg);
-unsigned int 			get_args(t_proc *proc, unsigned int *arg, t_arg_type *type, unsigned char *map);
+void 					check_carry(unsigned int arg, t_proc *proc);
+unsigned int 			get_args(t_proc *proc, t_arg *arg, t_arg_type *type, unsigned char *map);
 unsigned int 			add(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
 unsigned int 			sub(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
 unsigned int 			ft_and(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
@@ -150,8 +150,11 @@ unsigned int			lfork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *m
 unsigned int 			aff(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
 unsigned int 			st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
 unsigned int 			sti(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map);
+void					ft_read_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start);
+unsigned int			ft_check_pos(int i);
+void					ft_write_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start);
 
 
-t_func funcs[16] = {&live, &ld, &st, &add, &sub, &ft_and, &ft_or, &ft_xor, &zjmp, &ldi, &sti, &ft_fork, &lld, &lldi, &lfork, &aff};
+static t_func funcs[16] = {&live, &ld, &st, &add, &sub, &ft_and, &ft_or, &ft_xor, &zjmp, &ldi, &sti, &ft_fork, &lld, &lldi, &lfork, &aff};
 
 #endif

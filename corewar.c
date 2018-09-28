@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/11 19:08:07 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/27 18:18:13 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/28 17:20:46 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		main(int argc, char **argv)
 	short	res;
 	unsigned char *mem;
 	t_proc *prcs;
-	t_champ *winner;
+	t_champ winner;
 
 	prcs = NULL;
 	mem = ft_memcreator();
@@ -29,11 +29,11 @@ int		main(int argc, char **argv)
 		prcs = ft_init_proc(p, mem, res);
 		p->lastpid = res;
 		p->prcs = prcs;
-		ft_memdumper(&mem[0]);
 	}
 	else
 		ft_print_error((res * -1) - 1);
-//	winner = ft_vmachine(p, prcs, mem);
+	winner = ft_vmachine(p, prcs, mem);
+	ft_memdumper(&mem[0]);
 //	system("leaks corewar");
 	return (0);
 }

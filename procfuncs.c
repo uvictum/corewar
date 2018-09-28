@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/27 18:06:30 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/28 18:08:54 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ void	ft_kill_proc(t_proc **prcs, bool mode)
 {
 	t_proc *buf;
 
-	if (!(*prcs)->live || (*prcs)->next->live == mode)
-	{
-		buf = *prcs;
-		*prcs = (*prcs)->next;
-		free(buf);
-	}
+	//if (!(*prcs)->live || (*prcs)->next->live == mode)
+	//{
+	//	buf = *prcs;
+	//	*prcs = (*prcs)->next;
+	//	free(buf);
+//	}
 	while ((*prcs)->next)
 	{
 		if (!((*prcs)->next->live) || (*prcs)->next->live == mode)
@@ -61,8 +61,9 @@ void	ft_kill_proc(t_proc **prcs, bool mode)
 			(*prcs)->next = (*prcs)->next->next;
 			free(buf);
 		}
+		(*prcs)->next = (*prcs)->next->next;
 	}
-	if (!(*prcs)->live || (*prcs)->next->live == mode)
+	if (!(*prcs)->live || (*prcs)->live == mode) // обнулит если не осталось живых процессов
 	{
 		free(*prcs);
 		*prcs = NULL;
@@ -74,7 +75,7 @@ t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 	short	i;
 	t_proc	*prcs;
 
-
+	prcs = NULL;
 	i = 0;
 	while (i < player_qnt)
 	{
@@ -87,8 +88,10 @@ t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 {
 	int		moves;
+//	t_proc	*prcs;
 
 	moves = 0;
+//	prcs = *start;
 	while(prcs)
 	{
 		if (prcs->cycles_to_do > 0)
@@ -105,7 +108,7 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 			else
 			{
 				prcs->cmnd = mem[prcs->pos];
-				prcs->cycles_to_do = op_tab[prcs->pos - 1].cycles_to_do;
+				prcs->cycles_to_do = op_tab[prcs->cmnd - 1].cycles_to_do;
 				prcs->cycles_to_do--;
 			}
 		}
