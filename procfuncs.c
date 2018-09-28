@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/28 18:08:54 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/28 19:15:27 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ void	ft_kill_proc(t_proc **prcs, bool mode)
 			(*prcs)->next = (*prcs)->next->next;
 			free(buf);
 		}
-		(*prcs)->next = (*prcs)->next->next;
+		else
+			(*prcs)->next = (*prcs)->next->next;
 	}
 	if (!(*prcs)->live || (*prcs)->live == mode) // обнулит если не осталось живых процессов
 	{
@@ -90,7 +91,7 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 	int		moves;
 //	t_proc	*prcs;
 
-	moves = 0;
+	moves = 1;
 //	prcs = *start;
 	while(prcs)
 	{
@@ -105,12 +106,14 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 					moves = ft_call_cmnd(prcs, p, mem);
 				ft_move_proc(prcs, moves, mem);
 			}
-			else
+			else if (mem[prcs->pos] <= 16 && mem[prcs->pos] > 0)
 			{
-				prcs->cmnd = mem[prcs->pos];
-				prcs->cycles_to_do = op_tab[prcs->cmnd - 1].cycles_to_do;
-				prcs->cycles_to_do--;
+					prcs->cmnd = mem[prcs->pos];
+					prcs->cycles_to_do = op_tab[prcs->cmnd - 1].cycles_to_do;
+					prcs->cycles_to_do--;
 			}
+			else
+				ft_move_proc(prcs, 1, mem);
 		}
 		prcs = prcs->next;
 	}

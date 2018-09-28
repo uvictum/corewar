@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/28 17:58:16 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/09/28 19:11:34 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
 	int			res;
 
 	if (op_tab[prcs->cmnd - 1].codage)
-		args = ft_byte_decode(mem[prcs->cmnd - 1], op_tab[prcs->cmnd - 1].arg_qnt);
+		args = ft_byte_decode(mem[prcs->pos + 1], op_tab[prcs->cmnd - 1].arg_qnt);
 	if (!args)
 		return (1);
 	res = ft_validate_targs(args, op_tab[prcs->cmnd - 1].args, op_tab[prcs->cmnd - 1].arg_qnt, op_tab[prcs->cmnd - 1].label);
@@ -41,13 +41,11 @@ t_arg_type	*ft_byte_decode(unsigned char code_bt, int arg_qnt)
 	int	i;
 	t_arg_type	*args;
 
-	if ((code_bt << 6) & 3)
-		return (NULL);
 	args = ft_memalloc(arg_qnt);
 	i = 0;
 	while (i < arg_qnt)
 	{
-		args[i] = ((code_bt << (2 * i)) >> 6) & 0;
+		args[i] = ((code_bt << (2 * i) & 255) >> 6);
 		args[i] = args[i] == 3 ? 4 : args[i];
 		i++;
 	}
