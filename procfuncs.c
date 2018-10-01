@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/28 19:15:27 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/01 19:15:15 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_proc	*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr)
 	newproc->player_nbr = player_nbr;
 	newproc->reg[0] = (unsigned int)newproc->player_nbr;
 	newproc->next = NULL;
+	newproc->cmnd = 0xff;
 	return (newproc);
 
 }
@@ -99,7 +100,7 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 			prcs->cycles_to_do--;
 		else
 		{
-			if (prcs->cmnd)
+			if (prcs->cmnd != 0xff)
 			{
 				moves = 1;
 				if (prcs->cmnd <= 15)
@@ -108,8 +109,8 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 			}
 			else if (mem[prcs->pos] <= 16 && mem[prcs->pos] > 0)
 			{
-					prcs->cmnd = mem[prcs->pos];
-					prcs->cycles_to_do = op_tab[prcs->cmnd - 1].cycles_to_do;
+					prcs->cmnd = mem[prcs->pos] - 1;
+					prcs->cycles_to_do = op_tab[prcs->cmnd].cycles_to_do;
 					prcs->cycles_to_do--;
 			}
 			else

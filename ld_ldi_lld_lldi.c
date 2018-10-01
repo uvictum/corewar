@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:05:03 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/27 16:24:29 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/01 19:01:34 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ unsigned int			ldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map
 	else
 		res += args[1].qbt;
 	ft_read_mem(&buf, map, 4, (res % IDX_MOD));
-	proc->reg[args[2].obts[0]] = ft_swapuint(buf.qbt);
+	proc->reg[args[2].obts[0] - 1] = ft_swapuint(buf.qbt);
 	free(args);
 	return (ret);
 }
@@ -69,7 +69,7 @@ unsigned int				lld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *ma
 		else
 		{
 			ft_read_mem(&buf, map, T_IND, proc->pos + args[0].tbts[0]); //>>> original is not correct
-			proc->reg[args[1].obts[0]] = ft_swapuint(buf.qbt);
+			proc->reg[args[1].obts[0] - 1] = ft_swapuint(buf.qbt);
 		}
 	}
 	check_carry(proc->reg[args[1].obts[0]], proc);
@@ -96,7 +96,7 @@ unsigned int lldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	else
 		res += args[1].qbt;
 	ft_read_mem(&buf, map, 4, res);
-	proc->reg[args[2].obts[0]] = ft_swapuint(buf.qbt);
+	proc->reg[args[2].obts[0] - 1] = ft_swapuint(buf.qbt);
 	free(args);
 	return (ret);
 }

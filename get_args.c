@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/27 18:04:59 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/01 18:40:56 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ unsigned int get_args(t_proc *proc, t_arg *arg, t_arg_type *type, unsigned char 
 			if (!check_reg(proc, (arg[i].obts[0]), &ret, type))
 				return (ret);
 			if (i != op_tab[proc->cmnd].arg_qnt - 1 || proc->cmnd == 11)
-				arg[i].qbt = proc->reg[arg[i].obts[0]];
+				arg[i].qbt = proc->reg[arg[i].obts[0] - 1];
 		}
 		if (type[i] == T_DIR)
 			ret += get(&arg[i], map, 4 - (2 * op_tab[proc->cmnd].label), ret);
@@ -85,10 +85,10 @@ void	ft_read_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start)
 	unsigned int	i;
 
 	i = 0;
-	while (start < size && i < 4)
+	while (i < size && i < 4)
 	{
 		// *arg-obts[i] = mem[ft_check_pos(start)];
-		arg->obts[i] = mem[ft_check_pos(start)];
+		(*arg).obts[i] = mem[ft_check_pos(start)];
 		i++;
 		start++;
 	}
@@ -108,7 +108,7 @@ void	ft_write_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start)
 	unsigned int	i;
 
 	i = 0;
-	while (start < size && i < 4)
+	while (i < size && i < 4)
 	{
 		// mem[ft_check_pos(start)] = *arg.obts[i];
 		mem[ft_check_pos(start)] = arg->obts[i];

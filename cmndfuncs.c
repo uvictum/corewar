@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/28 19:11:34 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/01 19:23:45 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,17 @@ unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
 {
 	t_arg_type *args;
 	int			res;
-
-	if (op_tab[prcs->cmnd - 1].codage)
-		args = ft_byte_decode(mem[prcs->pos + 1], op_tab[prcs->cmnd - 1].arg_qnt);
-	if (!args)
-		return (1);
-	res = ft_validate_targs(args, op_tab[prcs->cmnd - 1].args, op_tab[prcs->cmnd - 1].arg_qnt, op_tab[prcs->cmnd - 1].label);
+	
+	res = 0;
+	if (op_tab[prcs->cmnd].codage)
+	{
+		args = ft_byte_decode(mem[prcs->pos + 1], op_tab[prcs->cmnd].arg_qnt);
+		if (!args)
+			return (1);
+		res = ft_validate_targs(args, op_tab[prcs->cmnd].args, op_tab[prcs->cmnd].arg_qnt, op_tab[prcs->cmnd].label);
+	}
 	if (!res)
-		res = funcs[prcs->cmnd - 1](prcs, p, args, mem);
+		res = funcs[prcs->cmnd](prcs, p, args, mem);
 	prcs->cmnd = 0;
 	//free(args);
 	return ((unsigned int)res);

@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:07:17 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/09/27 16:39:21 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/01 19:09:43 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ unsigned int		st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	if (type[1] == T_IND)
 		ft_write_mem(&args[0], map, T_IND, args[1].qbt);
 	if (type[1] == T_REG)
-		proc->reg[args[1].obts[0]] = args[0].qbt;
+		proc->reg[args[1].obts[0] - 1] = args[0].qbt;
 	free(args);
 	return (ret);
 }
