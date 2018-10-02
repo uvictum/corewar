@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/01 18:40:56 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/02 18:18:36 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ unsigned int get_args(t_proc *proc, t_arg *arg, t_arg_type *type, unsigned char 
 		{
 			ret += get(&arg[i], map, T_REG_SIZE, ret);
 			if (!check_reg(proc, (arg[i].obts[0]), &ret, type))
-				return (ret);
+				return (ret - proc->pos);
 			if (i != op_tab[proc->cmnd].arg_qnt - 1 || proc->cmnd == 11)
 				arg[i].qbt = proc->reg[arg[i].obts[0] - 1];
 		}
@@ -77,7 +77,7 @@ unsigned int get_args(t_proc *proc, t_arg *arg, t_arg_type *type, unsigned char 
 		}
 		i++;
 	}
-	return (ret);
+	return (ret - proc->pos);
 }
 
 void	ft_read_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start)

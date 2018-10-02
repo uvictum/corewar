@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/01 19:24:32 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/02 18:26:42 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ unsigned int 			sti(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *ma
 void					ft_read_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start);
 unsigned int			ft_check_pos(int i);
 void					ft_write_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start);
+int						ft_live_proc(t_proc *prcs);
 
 
 static t_func funcs[16] = {&live, &ld, &st, &add, &sub, &ft_and, &ft_or, &ft_xor, &zjmp, &ldi, &sti, &ft_fork, &lld, &lldi, &lfork, &aff};

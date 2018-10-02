@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 18:37:15 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/28 17:46:14 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/02 18:04:47 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,21 @@ t_champ		ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
 {
 	int	cycles_to_die;
 	int	curr_round;
+	int	counter;
 
+	counter = 1;
 	cycles_to_die = CYCLE_TO_DIE;
 	while(cycles_to_die > 0)
 	{
 		curr_round = cycles_to_die;
 		while (curr_round > 0)
 		{
-			ft_proc_control(prcs, mem, p);
+			ft_printf("It is now cycle:%d\n", counter++);
+			ft_proc_control(p->prcs, mem, p);
 			curr_round--;
 		}
-		ft_kill_proc(&prcs, DEAD); // DEAD = 0 ALL = 1
-		if (prcs) // если остались живые процессы
+		ft_kill_proc(&p->prcs, DEAD); // DEAD = 0 ALL = 1
+		if (ft_live_proc(p->prcs)) // если остались живые процессы
 			cycles_to_die = ft_change_cycles(p, cycles_to_die);
 	   	else
 			break;

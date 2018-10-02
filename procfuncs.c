@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/01 19:15:15 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/02 18:56:53 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,6 @@ void	ft_kill_proc(t_proc **prcs, bool mode)
 {
 	t_proc *buf;
 
-	//if (!(*prcs)->live || (*prcs)->next->live == mode)
-	//{
-	//	buf = *prcs;
-	//	*prcs = (*prcs)->next;
-	//	free(buf);
-//	}
 	while ((*prcs)->next)
 	{
 		if (!((*prcs)->next->live) || (*prcs)->next->live == mode)
@@ -102,7 +96,6 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 		{
 			if (prcs->cmnd != 0xff)
 			{
-				moves = 1;
 				if (prcs->cmnd <= 15)
 					moves = ft_call_cmnd(prcs, p, mem);
 				ft_move_proc(prcs, moves, mem);
@@ -118,6 +111,18 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 		}
 		prcs = prcs->next;
 	}
+}
+
+int		ft_live_proc(t_proc *prcs)
+{
+	if (!prcs)
+		return(0);
+	while (prcs)
+	{
+		prcs->live = 0;
+		prcs = prcs->next;
+	}
+	return(1);
 }
 
 

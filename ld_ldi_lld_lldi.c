@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:05:03 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/01 19:01:34 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/02 18:44:23 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ unsigned int			ldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map
 		res += args[1].tbts[0];
 	else
 		res += args[1].qbt;
-	ft_read_mem(&buf, map, 4, (res % IDX_MOD));
+	ft_read_mem(&buf, map, 4, proc->pos + (res % IDX_MOD));
 	proc->reg[args[2].obts[0] - 1] = ft_swapuint(buf.qbt);
 	free(args);
 	return (ret);
