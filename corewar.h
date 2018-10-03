@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/02 18:26:42 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 18:41:56 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void					ft_memdumper(unsigned char *mem);
 void					ft_print_error(short code);
 void					ft_kill_proc(t_proc **prcs, bool mode);
 t_proc					*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt);
-t_proc					*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr);
+t_proc					*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr, bool carry);
 t_proc					*ft_add_proc(t_proc *prcs, t_proc *newproc);
 t_prog					*ft_init_prog(void);
 void					ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem);
@@ -154,6 +154,7 @@ void					ft_read_mem(t_arg *arg, unsigned char *mem, unsigned int size, int star
 unsigned int			ft_check_pos(int i);
 void					ft_write_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start);
 int						ft_live_proc(t_proc *prcs);
+int						ft_get_champ_num(t_prog *p, int num);
 
 
 static t_func funcs[16] = {&live, &ld, &st, &add, &sub, &ft_and, &ft_or, &ft_xor, &zjmp, &ldi, &sti, &ft_fork, &lld, &lldi, &lfork, &aff};

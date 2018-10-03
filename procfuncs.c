@@ -6,13 +6,13 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/03 17:08:36 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 19:13:43 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-t_proc	*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr)
+t_proc	*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr, bool carry)
 {
 	t_proc	*newproc;
 
@@ -25,6 +25,7 @@ t_proc	*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr)
 	newproc->reg[0] = (unsigned int)newproc->player_nbr;
 	newproc->next = NULL;
 	newproc->cmnd = 0xff;
+	newproc->carry = carry; // check fork for copying reg
 	return (newproc);
 }
 
@@ -63,7 +64,7 @@ void	ft_kill_proc(t_proc **prcs, bool mode)
 		free(*prcs);
 		*prcs = NULL;
 	}
-}
+}// починить функцию
 
 t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 {
@@ -74,7 +75,7 @@ t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 	i = 0;
 	while (i < player_qnt)
 	{
-		prcs = ft_add_proc(prcs, ft_new_proc((unsigned int)(i + 1), 0, p->player_nbr[i]));
+		prcs = ft_add_proc(prcs, ft_new_proc((unsigned int)(i + 1), i * 1024, p->player_nbr[i], 0));
 		i++;
 	}
 	return (prcs);

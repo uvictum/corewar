@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 15:38:47 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/13 17:48:27 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:43:22 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,18 @@ void	ft_binreader(int fd, t_champ *champs, short champ_num, unsigned char *mem)
 	read(fd, champs->exec.obts, champs->execsize);
 	ft_loadchamp(mem, champs, champ_num);
 	close(fd);
+}
+
+int		ft_get_champ_num(t_prog *p, int num)
+{
+	int	i;
+
+	i = 0;
+	while (i < p->players)
+	{
+		if (p->player_nbr[i] == num)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
