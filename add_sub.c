@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:03:45 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/02 18:50:38 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 15:58:55 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ unsigned int add(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	ret = get_args(proc, arg, type, map);
 		proc->reg[arg[2].obts[0] - 1] = arg[0].obts[0] + arg[1].obts[0];
 	check_carry(proc->reg[arg[2].obts[0] - 1], proc);
+	if (g->verbose & 4)
+	{
+	}
 	free(arg);
 	return (ret);
 }
@@ -34,6 +37,9 @@ unsigned int sub(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	ret = get_args(proc, arg, type, map);
 		proc->reg[arg[2].obts[0] - 1] = arg[0].obts[0] - arg[1].obts[0];
 	check_carry(proc->reg[arg[2].obts[0] - 1], proc);
+	if (g->verbose & 4)
+	{
+	}
 	free(arg);
 	return (ret);
 }

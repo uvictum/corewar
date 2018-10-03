@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 18:37:15 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/02 18:04:47 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 15:54:19 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ t_champ		ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
 		curr_round = cycles_to_die;
 		while (curr_round > 0)
 		{
-			ft_printf("It is now cycle:%d\n", counter++);
+			if (p->verbose & 2)
+				ft_printf("It is now cycle %d\n", counter);
 			ft_proc_control(p->prcs, mem, p);
+			counter++;
 			curr_round--;
 		}
 		ft_kill_proc(&p->prcs, DEAD); // DEAD = 0 ALL = 1

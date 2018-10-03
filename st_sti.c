@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:07:17 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/02 18:43:50 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 16:51:47 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,35 +16,53 @@ unsigned int		st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
 	unsigned int 	ret;
 	t_arg			*args;
+	t_arg			r;
 
 	args = ft_memalloc(sizeof(t_arg) * 2);
 	ret = get_args(proc, args, type, map);
+	ft_read_mem(&r, map, 1, proc->pos + 2);
 	if (type[1] == T_IND)
-		ft_write_mem(&args[0], map, T_IND, proc->pos + args[1].qbt);
+	{
+		ft_write_mem(&args[0], map, T_IND, proc->pos + args[1].tbts[0]);
+		if (g->verbose & 4)
+			ft_printf("P\t%d | st r%d %d\n", proc->pid, r.obts[0], args[1].tbts[0]);
+	}
 	if (type[1] == T_REG)
+	{
 		proc->reg[args[1].obts[0] - 1] = args[0].qbt;
+		if (g->verbose & 4)
+			ft_printf("P\t%d | st r%d r%d\n", proc->pid, r.obts[0], args[1].obts[0] - 1);
+	}
 	free(args);
 	return (ret);
 }
 
 unsigned int 		sti(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 {
-	int			 	pos;
+	int			 	arg1;
+	int				arg2;
 	unsigned int	ret;
 	t_arg			*args;
+	t_arg			r;
 
-	pos = (int)proc->pos;
+	ft_read_mem(&r, map, 1, proc->pos + 2);
 	args = ft_memalloc(sizeof(unsigned int) * 2);
 	ret = get_args(proc, args, type, map);
 	if (type[1] == T_DIR)
-		pos += args[1].tbts[0];
+		arg1 = args[1].tbts[0];
 	else
-		pos += args[1].qbt;
+		arg1 = args[1].qbt;
 	if (type[2] == T_DIR)
-		pos += args[2].tbts[0];
+		arg2 = args[2].tbts[0];
 	else
-		pos += args[2].qbt;
-	ft_write_mem(&args[0], map, 4, pos % IDX_MOD);
+		arg2 = args[2].qbt;
+	ft_write_mem(&args[0], map, 4, proc->pos + ((arg1 + arg2) % IDX_MOD));
+	if (g->verbose & 4)
+	{
+		ft_printf("P   %d | sti r%d %d %d\n", proc->pid, r.obts[0], arg1, arg2);
+		ft_printf("      | -> store to %d + %d = %d (with pc and mod %d)\n", arg1,
+				arg2, arg1 + arg2, proc->pos + ((arg1 + arg2) % IDX_MOD));
+	}
 	free(args);
-	return (ret);	
+	return (ret);
 }

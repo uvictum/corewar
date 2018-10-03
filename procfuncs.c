@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/02 18:56:53 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:08:36 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_proc	*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr)
 	newproc->next = NULL;
 	newproc->cmnd = 0xff;
 	return (newproc);
-
 }
 
 t_proc	*ft_add_proc(t_proc *prcs, t_proc *newproc)
@@ -59,7 +58,7 @@ void	ft_kill_proc(t_proc **prcs, bool mode)
 		else
 			(*prcs)->next = (*prcs)->next->next;
 	}
-	if (!(*prcs)->live || (*prcs)->live == mode) // обнулит если не осталось живых процессов
+	if (!(*prcs)->live || (*prcs)->live == mode)
 	{
 		free(*prcs);
 		*prcs = NULL;
@@ -84,15 +83,13 @@ t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 {
 	int		moves;
-//	t_proc	*prcs;
 
 	moves = 1;
-//	prcs = *start;
 	while(prcs)
 	{
 		if (prcs->cycles_to_do > 0)
 			prcs->cycles_to_do--;
-		else
+		if (prcs->cycles_to_do == 0)
 		{
 			if (prcs->cmnd != 0xff)
 			{
@@ -124,6 +121,3 @@ int		ft_live_proc(t_proc *prcs)
 	}
 	return(1);
 }
-
-
-/// после выполнения команды передвинуть

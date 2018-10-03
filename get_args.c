@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/02 18:18:36 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/03 17:14:17 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ unsigned int get_args(t_proc *proc, t_arg *arg, t_arg_type *type, unsigned char 
 		if (type[i] == T_IND)
 		{
 			ret += get(&arg[i], map, T_IND_SIZE, ret);
-		if (proc->cmnd != 12)
+		if (proc->cmnd != 12 && proc->cmnd != 2)
 			ft_read_mem(&arg[i], map, T_IND, proc->pos + (arg[i].tbts[0] % IDX_MOD));
 		}
 		i++;
