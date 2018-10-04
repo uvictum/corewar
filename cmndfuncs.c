@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/03 16:00:47 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 14:59:18 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem)
 	prcs->pos += move;
 	while (prcs->pos >= MEM_SIZE)
 		prcs->pos -= MEM_SIZE;
-	ft_printf("ADV %u\n", move);
+	if (move > 1)
+		ft_printf("ADV %u\n", move);
 }
 
 unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
@@ -39,7 +40,7 @@ unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
 	if (!res)
 	{
 		res = funcs[prcs->cmnd](prcs, p, args, mem);
-		ft_printf("now %s is doing\n", op_tab[prcs->cmnd].name);
+		//ft_printf("now %s is doing\n", op_tab[prcs->cmnd].name);
 	}
 	prcs->cmnd = 0xff;
 	//free(args);

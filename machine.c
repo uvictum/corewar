@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 18:37:15 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/03 15:54:19 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 15:39:42 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_champ		ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
 			counter++;
 			curr_round--;
 		}
-		ft_kill_proc(&p->prcs, DEAD); // DEAD = 0 ALL = 1
+		ft_kill_proc(&p->prcs, DEAD, cycles_to_die); // DEAD = 0 ALL = 1
 		if (ft_live_proc(p->prcs)) // если остались живые процессы
 			cycles_to_die = ft_change_cycles(p, cycles_to_die);
 	   	else
@@ -51,6 +51,7 @@ int		ft_change_cycles(t_prog *p, int cycles_to_die)
 		{
 			cycles_to_die -= CYCLE_DELTA;
 			p->checks_nbr = 0;
+			ft_printf("Cycle to die is now %d\n", cycles_to_die);
 			return(cycles_to_die);
 		}
 		i++;

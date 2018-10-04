@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/03 18:41:56 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 15:41:43 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ unsigned char			*ft_memcreator(void);
 void					ft_loadchamp(unsigned char *mem, t_champ *champ, short champ_num);
 void					ft_memdumper(unsigned char *mem);
 void					ft_print_error(short code);
-void					ft_kill_proc(t_proc **prcs, bool mode);
+void					ft_kill_proc(t_proc **prcs, bool mode, int ctd);
 t_proc					*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt);
 t_proc					*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr, bool carry);
 t_proc					*ft_add_proc(t_proc *prcs, t_proc *newproc);

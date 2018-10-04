@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:05:03 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/03 17:19:54 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 14:28:57 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ unsigned int			ldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map
 	if (g->verbose & 4)
 	{
 		ft_printf("P    %d | ldi %d %d r%d\n", proc->pid, arg1, arg2, args[2].obts[0]);
-		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", arg1, arg2, arg1 + arg2,((arg1 + arg2) % IDX_MOD));
+		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", arg1, arg2, arg1 + arg2, proc->pos + ((arg1 + arg2) % IDX_MOD));
 	}
 	free(args);
 	return (ret);

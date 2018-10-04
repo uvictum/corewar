@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/03 19:13:43 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 15:41:19 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,25 +44,36 @@ t_proc	*ft_add_proc(t_proc *prcs, t_proc *newproc)
 	return (prcs);
 }
 
-void	ft_kill_proc(t_proc **prcs, bool mode)
+void	ft_kill_proc(t_proc **prcs, bool mode, int ctd)
 {
 	t_proc *buf;
-
-	while ((*prcs)->next)
+	t_proc *prev;
+	
+	buf = *prcs;
+	prev = NULL;
+	while (buf)
 	{
-		if (!((*prcs)->next->live) || (*prcs)->next->live == mode)
+		if (!buf->live || buf->live == mode)
 		{
-			buf = (*prcs)->next;
-			(*prcs)->next = (*prcs)->next->next;
-			free(buf);
+			ft_printf("Process %d hasn't lived for XX cycles (CTD %d)\n", buf->pid, ctd);
+			if (prev)
+			{
+				prev->next = buf->next;
+				free(buf);
+				buf = prev->next;
+			}
+			else
+			{
+				*prcs = buf->next;
+				free(buf);
+				buf = *prcs;
+			}
 		}
 		else
-			(*prcs)->next = (*prcs)->next->next;
-	}
-	if (!(*prcs)->live || (*prcs)->live == mode)
-	{
-		free(*prcs);
-		*prcs = NULL;
+		{
+			prev = buf;
+			buf = buf->next;
+		}
 	}
 }// починить функцию
 

@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:10:21 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/03 18:39:23 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 15:21:36 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ unsigned int				live(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *m
 	{
 		chmp = g->champs[num];
 		g->last_live_nbr = num;
+		g->lives[num]++;
 		if (g->verbose & 1)
 			ft_printf("Player %d (%s) is said to be alive\n", num + 1, chmp.name);
 	}
