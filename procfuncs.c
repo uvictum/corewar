@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 15:41:19 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 18:47:10 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_proc	*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr, bool car
 	newproc->reg[0] = (unsigned int)newproc->player_nbr;
 	newproc->next = NULL;
 	newproc->cmnd = 0xff;
-	newproc->carry = carry; // check fork for copying reg
+	newproc->carry = carry;
 	return (newproc);
 }
 
@@ -107,7 +107,7 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 			{
 				if (prcs->cmnd <= 15)
 					moves = ft_call_cmnd(prcs, p, mem);
-				ft_move_proc(prcs, moves, mem);
+				ft_move_proc(prcs, moves, mem, p);
 			}
 			else if (mem[prcs->pos] <= 16 && mem[prcs->pos] > 0)
 			{
@@ -116,7 +116,7 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 					prcs->cycles_to_do--;
 			}
 			else
-				ft_move_proc(prcs, 1, mem);
+				ft_move_proc(prcs, 1, mem, p);
 		}
 		prcs = prcs->next;
 	}
@@ -133,3 +133,26 @@ int		ft_live_proc(t_proc *prcs)
 	}
 	return(1);
 }
+
+t_proc	*ft_copy_proc(t_proc *sample, unsigned int pid, unsigned int pos)
+{
+	t_proc	*newproc;
+	int		i;
+
+	i = 0;
+	newproc = ft_memalloc(sizeof(t_proc));
+	if (!newproc)
+		return (NULL);
+	newproc->pid = pid;
+	newproc->pos = pos;
+	newproc->player_nbr = sample->player_nbr;
+	newproc->next = NULL;
+	newproc->cmnd = 0xff;
+	newproc->carry = sample->pos;
+	while(i++ < 16)
+		newproc->reg[i] = sample->reg[i];	
+	newproc->reg[0] = (unsigned int)newproc->player_nbr;
+	return (newproc);
+}
+
+

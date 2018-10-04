@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 15:41:43 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 17:08:06 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ t_proc					*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt);
 t_proc					*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr, bool carry);
 t_proc					*ft_add_proc(t_proc *prcs, t_proc *newproc);
 t_prog					*ft_init_prog(void);
-void					ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem);
+void					ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem, t_prog *p);
 unsigned int			ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem);
 t_arg_type				*ft_byte_decode(unsigned char code_bt, int arg_qnt);
 unsigned int			ft_validate_targs(t_arg_type *code, t_arg_type *cmnd, int arg_qnt, char label_size);
@@ -155,7 +155,8 @@ unsigned int			ft_check_pos(int i);
 void					ft_write_mem(t_arg *arg, unsigned char *mem, unsigned int size, int start);
 int						ft_live_proc(t_proc *prcs);
 int						ft_get_champ_num(t_prog *p, int num);
-
+unsigned int			ft_calc_move(t_arg_type *type, t_proc *proc);
+t_proc					*ft_copy_proc(t_proc *sample, unsigned int pid, unsigned int pos);
 
 static t_func funcs[16] = {&live, &ld, &st, &add, &sub, &ft_and, &ft_or, &ft_xor, &zjmp, &ldi, &sti, &ft_fork, &lld, &lldi, &lfork, &aff};
 

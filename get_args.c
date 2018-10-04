@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/03 19:28:36 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 19:45:00 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,25 @@ int check_reg(t_proc *proc, unsigned char arg, unsigned int *ret, t_arg_type *ty
 	if (arg > 0 && arg < 16)
 		return (1);
 	else
+		return (0);
+}
+
+unsigned int ft_calc_move(t_arg_type *type, t_proc *proc)
+{
+	unsigned int	ret;
+	int				i;
+
+	i = 0;
+	ret = 0;
+	while (i < op_tab[proc->cmnd].arg_qnt)
 	{
-		while (i < op_tab[proc->cmnd].arg_qnt)
-		{
 			if (type[i] == T_DIR)
-				*ret += 4 - (2 * op_tab[proc->cmnd].label);
+				ret += 4 - (2 * op_tab[proc->cmnd].label);
 			else
-				*ret += type[i];
+				ret += type[i];
 			i++;
-		}
 	}
-	return (0);
+	return (ret);
 }
 
 unsigned int	 get(t_arg *arg, unsigned char *map, unsigned int size, unsigned int start)
@@ -63,8 +71,8 @@ unsigned int get_args(t_proc *proc, t_arg *arg, t_arg_type *type, unsigned char 
 		{
 			ret += get(&arg[i], map, T_REG_SIZE, ret);
 			if (!check_reg(proc, (arg[i].obts[0]), &ret, type))
-				return (ret - proc->pos);
-			if (i != op_tab[proc->cmnd].arg_qnt - 1 || proc->cmnd == 11)
+				return (0xff);
+			if (i != op_tab[proc->cmnd].arg_qnt - 1 || proc->cmnd == 10)
 				arg[i].qbt = proc->reg[arg[i].obts[0] - 1];
 		}
 		if (type[i] == T_DIR)

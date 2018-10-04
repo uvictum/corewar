@@ -6,22 +6,32 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 14:59:18 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 20:17:25 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-void	ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem)
+void	ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem, t_prog *p)
 {
-	unsigned int start;
+	unsigned int	start;
+	int				i;
 
+	i = 0;
 	start = prcs->pos;
 	prcs->pos += move;
 	while (prcs->pos >= MEM_SIZE)
 		prcs->pos -= MEM_SIZE;
-	if (move > 1)
-		ft_printf("ADV %u\n", move);
+	if (move > 1 && p->verbose & 16)
+	{
+		ft_printf("ADV %u (%#.4x -> %#.4x) ", move, start, prcs->pos);
+		while (i < move)
+		{
+			ft_printf("%.2x ", mem[ft_check_pos(start + i)]);
+			i++;
+		}
+		ft_printf("\n");
+	}
 }
 
 unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
@@ -48,7 +58,8 @@ unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
 }
 
 t_arg_type	*ft_byte_decode(unsigned char code_bt, int arg_qnt)
-{
+{ret = get_args(proc, args, type, map);
+
 	int	i;
 	t_arg_type	*args;
 

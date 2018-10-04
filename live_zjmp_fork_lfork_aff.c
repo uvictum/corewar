@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:10:21 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/04 15:21:36 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/04 19:29:32 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ unsigned int		ft_fork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *
 	ft_read_mem(&dir, map, 2, proc->pos + 1);
 	dir.tbts[0] = ft_swapshrt(dir.tbts[0]);
 	pos = ft_check_pos(proc->pos + (dir.tbts[0] % IDX_MOD));
-	g->prcs = ft_add_proc(g->prcs, ft_new_proc(g->lastpid, pos, proc->reg[0], proc->carry));
+	g->prcs = ft_add_proc(g->prcs, ft_copy_proc(proc, g->lastpid, pos));
 	if (g->verbose & 4)
 		ft_printf("P    %d | fork %d (%u)\n", proc->pid, dir.tbts[0], pos);
 	return (3);
@@ -79,7 +79,7 @@ unsigned int				lfork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *
 	ft_read_mem(&dir, map, 2, proc->pos + 1);
 	dir.tbts[0] = ft_swapshrt(dir.tbts[0]);
 	pos = ft_check_pos(proc->pos + dir.tbts[0]);
-	g->prcs = ft_add_proc(g->prcs, ft_new_proc(g->lastpid, pos, proc->reg[0], proc->carry));
+	g->prcs = ft_add_proc(g->prcs, ft_copy_proc(proc, g->lastpid, pos));
 	if (g->verbose & 4)
 		ft_printf("P    %d | lfork %d (%u)\n", proc->pid, dir.tbts[0], pos);
 	return (3);
