@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 15:38:17 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 18:13:52 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 16:39:20 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@ unsigned char		*ft_memcreator(void)
 	return (mem);
 }
 
-void				ft_loadchamp(unsigned char *mem, t_champ *champ, short champ_num)
+void				ft_loadchamp(unsigned char *mem, t_champ *champ, short champ_num, int player_qnt)
 {
 	unsigned int	i;
 	unsigned int	j;
 
-	j = champ_num * 1024;
+	if (player_qnt == 2)
+		j = champ_num * 2048;
+	else
+		j = champ_num * 1024;
 	i = 0;
 	while (i < champ->execsize)
 		mem[j++] = champ->exec.obts[i++];

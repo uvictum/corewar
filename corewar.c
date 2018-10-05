@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/11 19:08:07 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/09/28 17:20:46 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 17:04:38 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,20 @@ int		main(int argc, char **argv)
 	unsigned char *mem;
 	t_proc *prcs;
 	t_champ winner;
+	int		i;
 
+	i = 0;
 	prcs = NULL;
 	mem = ft_memcreator();
 	p = ft_init_prog();
 	if ((res = ft_read_args(argc, argv, p, mem)) >= 0)
 	{
-		p->players = res; // записываем количество чемпионов
+		p->players = res;
+		while (i < p->players)
+		{
+			ft_loadchamp(mem, &p->champs[i], i, p->players);
+			i++;
+		}
 		prcs = ft_init_proc(p, mem, res);
 		p->lastpid = res;
 		p->prcs = prcs;

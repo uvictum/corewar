@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:05:03 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/05 14:33:42 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 19:22:36 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ unsigned int			ld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 
 	args = ft_memalloc(sizeof(t_arg) * 2);
 	if ((ret = get_args(proc, args, type, map)) == 0xff)
+	{
+		free(args);
 		return (ft_calc_move(type, proc));
+	}
 	if (type[0] == T_DIR)
 		proc->reg[args[1].obts[0] - 1] = args[0].qbt;
 	else if (type[0] == T_IND)
@@ -42,7 +45,10 @@ unsigned int			ldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map
 
 	args = ft_memalloc(sizeof(t_arg) * 3);
 	if ((ret = get_args(proc, args, type, map)) == 0xff)
+	{
+		free(args);
 		return (ft_calc_move(type, proc));
+	}
 	if (type[0] == T_DIR)
 		arg1 = args[0].tbts[0];
 	else
@@ -70,7 +76,10 @@ unsigned int				lld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *ma
 
 	args = ft_memalloc(sizeof(t_arg) * 2);
 	if ((ret = get_args(proc, args, type, map)) == 0xff)
+	{
 		return (ft_calc_move(type, proc));
+		free(args);
+	}
 	if (type[0] == T_DIR)
 		proc->reg[args[1].obts[0] - 1] = args[0].qbt;
 	else
@@ -93,7 +102,10 @@ unsigned int lldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	res = 0;
 	args = ft_memalloc(sizeof(t_arg) * 3);
 	if ((ret = get_args(proc, args, type, map)) == 0xff)
+	{
+		free(args);
 		return (ft_calc_move(type, proc));
+	}
 	if (type[0] == T_DIR)
 		res += args[0].tbts[0];
 	else
@@ -104,6 +116,13 @@ unsigned int lldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 		res += args[1].qbt;
 	ft_read_mem(&buf, map, 4, res);
 	proc->reg[args[2].obts[0] - 1] = ft_swapuint(buf.qbt);
+	if (g->verbose & 4)
+	{
+		ft_printf("llldi is working\n");
+	//	ft_printf("P%5d | ldi %d %d r%d\n", proc->pid, arg1, arg2, args[2].obts[0]);
+	//	ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", arg1, arg2, arg1 + arg2, proc->pos + ((arg1 + arg2) % IDX_MOD));
+	}
+
 	free(args);
 	return (ret);
 }

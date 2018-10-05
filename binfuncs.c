@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 15:38:47 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/03 17:43:22 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 16:35:09 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_binreader(int fd, t_champ *champs, short champ_num, unsigned char *mem)
 	champs->execsize = ft_swapuint(champs->execsize);
 	read(fd, champs->comm, COMMENT_LENGTH + 4);
 	read(fd, champs->exec.obts, champs->execsize);
-	ft_loadchamp(mem, champs, champ_num);
+//	ft_loadchamp(mem, champs, champ_num);
 	close(fd);
 }
 

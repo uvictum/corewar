@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:03:45 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/05 15:40:27 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 17:03:45 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ unsigned int add(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 
 	arg = ft_memalloc(sizeof(t_arg)* 3);
 	if ((ret = get_args(proc, arg, type, map)) == 0xff)
+	{
+		free(arg);
 		return (ft_calc_move(type, proc));
+	}
 	ft_read_mem(&r1, map, T_REG, proc->pos + 2);
 	ft_read_mem(&r2, map, T_REG, proc->pos + 3);
 	proc->reg[arg[2].obts[0] - 1] = arg[0].qbt + arg[1].qbt;
@@ -41,7 +44,9 @@ unsigned int sub(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 
 	arg = ft_memalloc(sizeof(t_arg)* 3);
 	if ((ret = get_args(proc, arg, type, map)) == 0xff)
+	{	free(arg);
 		return (ft_calc_move(type, proc));
+	}
 	ft_read_mem(&r1, map, T_REG, proc->pos + 2);
 	ft_read_mem(&r2, map, T_REG, proc->pos + 3);
 	proc->reg[arg[2].obts[0] - 1] = arg[0].qbt - arg[1].qbt;

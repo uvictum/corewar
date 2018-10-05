@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 17:08:06 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 16:39:44 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ short					ft_binvalidator(int fd);
 short					ft_validchamp(int fd, unsigned int mgc_sz, int res);
 void					ft_binreader(int fd, t_champ *champs, short champ_num, unsigned char *mem);
 unsigned char			*ft_memcreator(void);
-void					ft_loadchamp(unsigned char *mem, t_champ *champ, short champ_num);
+void					ft_loadchamp(unsigned char *mem, t_champ *champ, short champ_num, int player_qnt);
 void					ft_memdumper(unsigned char *mem);
 void					ft_print_error(short code);
 void					ft_kill_proc(t_proc **prcs, bool mode, int ctd);

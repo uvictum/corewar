@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 16:07:25 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 16:53:07 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,12 +81,17 @@ t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 {
 	short	i;
 	t_proc	*prcs;
+	int		amp;
 
+	if (p->players == 2)
+		amp = MEM_SIZE / 2;
+	else
+		amp = MEM_SIZE / 4;
 	prcs = NULL;
 	i = 0;
 	while (i < player_qnt)
 	{
-		prcs = ft_add_proc(prcs, ft_new_proc((unsigned int)(i + 1), i * 1024, p->player_nbr[i], 0));
+		prcs = ft_add_proc(prcs, ft_new_proc((unsigned int)(i + 1), i * amp, p->player_nbr[i], 0));
 		i++;
 	}
 	return (prcs);

@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:07:17 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/05 14:19:07 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 17:01:28 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ unsigned int		st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 
 	args = ft_memalloc(sizeof(t_arg) * 2);
 	if ((ret = get_args(proc, args, type, map)) == 0xff)
+	{
+		free(args);
 		return (ft_calc_move(type, proc));
+	}
 	ft_read_mem(&r, map, 1, proc->pos + 2);
 	if (type[1] == T_IND)
 	{
@@ -49,7 +52,10 @@ unsigned int 		sti(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map
 	ft_read_mem(&r, map, 1, proc->pos + 2);
 	args = ft_memalloc(sizeof(unsigned int) * 2);
 	if ((ret = get_args(proc, args, type, map)) == 0xff)
+	{
+		free(args);
 		return (ft_calc_move(type, proc));
+	}
 	args[0].qbt = ft_swapuint(args[0].qbt);
 	if (type[1] == T_DIR)
 		arg1 = args[1].tbts[0];

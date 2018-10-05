@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/04 19:45:00 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 18:32:26 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,13 @@ unsigned int ft_calc_move(t_arg_type *type, t_proc *proc)
 	{
 			if (type[i] == T_DIR)
 				ret += 4 - (2 * op_tab[proc->cmnd].label);
+			else if	(type[i] == T_IND)
+				ret += T_IND_SIZE;
 			else
 				ret += type[i];
 			i++;
 	}
-	return (ret);
+	return (ret + 2);
 }
 
 unsigned int	 get(t_arg *arg, unsigned char *map, unsigned int size, unsigned int start)
