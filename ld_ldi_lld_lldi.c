@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:05:03 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/04 19:03:01 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 14:33:42 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ unsigned int			ld(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	if ((ret = get_args(proc, args, type, map)) == 0xff)
 		return (ft_calc_move(type, proc));
 	if (type[0] == T_DIR)
-		proc->reg[args[1].obts[0] - 1] = args[0].tbts[0];
+		proc->reg[args[1].obts[0] - 1] = args[0].qbt;
 	else if (type[0] == T_IND)
 		proc->reg[args[1].obts[0] - 1] = args[0].qbt;
 	check_carry(proc->reg[args[1].obts[0] - 1], proc);
 	if (g->verbose & 4)
-		ft_printf("P    %d | ld %d r%d\n", proc->pid, proc->reg[args[1].obts[0] - 1], args[1].obts[0]);
+		ft_printf("P%5d | ld %d r%d\n", proc->pid, proc->reg[args[1].obts[0] - 1], args[1].obts[0]);
 	free(args);
 	return (ret);
 }
@@ -55,7 +55,7 @@ unsigned int			ldi(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map
 	proc->reg[args[2].obts[0] - 1] = ft_swapuint(buf.qbt);
 	if (g->verbose & 4)
 	{
-		ft_printf("P    %d | ldi %d %d r%d\n", proc->pid, arg1, arg2, args[2].obts[0]);
+		ft_printf("P%5d | ldi %d %d r%d\n", proc->pid, arg1, arg2, args[2].obts[0]);
 		ft_printf("       | -> load from %d + %d = %d (with pc and mod %d)\n", arg1, arg2, arg1 + arg2, proc->pos + ((arg1 + arg2) % IDX_MOD));
 	}
 	free(args);

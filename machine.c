@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 18:37:15 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 15:39:42 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 15:15:52 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ t_champ		ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
 
 	counter = 1;
 	cycles_to_die = CYCLE_TO_DIE;
-	while(cycles_to_die > 0)
+	while(cycles_to_die > 0 || cycles_to_die == -14)
 	{
 		curr_round = cycles_to_die;
-		while (curr_round > 0)
+		while (curr_round > 0 || curr_round == -14)
 		{
 			if (p->verbose & 2)
 				ft_printf("It is now cycle %d\n", counter);
@@ -31,8 +31,10 @@ t_champ		ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
 			counter++;
 			curr_round--;
 		}
-		ft_kill_proc(&p->prcs, DEAD, cycles_to_die); // DEAD = 0 ALL = 1
-		if (ft_live_proc(p->prcs)) // если остались живые процессы
+		if (cycles_to_die == -14)
+			ft_kill_proc(&p->prcs, ALL, 0);
+		ft_kill_proc(&p->prcs, DEAD, cycles_to_die);
+		if (ft_live_proc(p->prcs))
 			cycles_to_die = ft_change_cycles(p, cycles_to_die);
 	   	else
 			break;
@@ -47,15 +49,16 @@ int		ft_change_cycles(t_prog *p, int cycles_to_die)
 	i = 0;
 	while(i < p->players)
 	{
-		if (p->lives[i] > NBR_LIVE || p->checks_nbr == MAX_CHECKS)
+		if (p->lives[i] > NBR_LIVE || ++p->checks_nbr == MAX_CHECKS)
 		{
 			cycles_to_die -= CYCLE_DELTA;
 			p->checks_nbr = 0;
+			p->lives[i] = 0;
 			ft_printf("Cycle to die is now %d\n", cycles_to_die);
 			return(cycles_to_die);
 		}
+		p->lives[i] = 0;
 		i++;
 	}
-	p->checks_nbr++;
 	return (cycles_to_die);
 }

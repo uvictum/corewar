@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 20:17:25 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 16:20:14 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,7 @@ unsigned int	ft_call_cmnd(t_proc *prcs, t_prog *p, unsigned char *mem)
 }
 
 t_arg_type	*ft_byte_decode(unsigned char code_bt, int arg_qnt)
-{ret = get_args(proc, args, type, map);
-
+{
 	int	i;
 	t_arg_type	*args;
 
@@ -87,10 +86,10 @@ unsigned int		ft_validate_targs(t_arg_type *code, t_arg_type *cmnd, int arg_qnt,
 	{
 		if (code[i] & cmnd[i])
 			j++;
-		else if (code[i] == T_IND)
+		if (code[i] == T_IND)
 			move += T_IND_SIZE;
 		else
-			move = code[i] == T_DIR ? move + label_size : move + code[i];
+			move = code[i] == T_DIR ? move + 4 - (2 * label_size) : move + code[i];
 		i++;
 	}
 	if (j == arg_qnt)

@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/04 18:47:10 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/05 16:07:25 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_kill_proc(t_proc **prcs, bool mode, int ctd)
 			buf = buf->next;
 		}
 	}
-}// починить функцию
+}
 
 t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 {
@@ -148,7 +148,7 @@ t_proc	*ft_copy_proc(t_proc *sample, unsigned int pid, unsigned int pos)
 	newproc->player_nbr = sample->player_nbr;
 	newproc->next = NULL;
 	newproc->cmnd = 0xff;
-	newproc->carry = sample->pos;
+	newproc->carry = sample->carry;
 	while(i++ < 16)
 		newproc->reg[i] = sample->reg[i];	
 	newproc->reg[0] = (unsigned int)newproc->player_nbr;
