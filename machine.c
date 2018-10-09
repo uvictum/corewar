@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 18:37:15 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 15:15:52 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/09 18:56:26 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ t_champ		ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
 			curr_round--;
 		}
 		if (cycles_to_die == -14)
-			ft_kill_proc(&p->prcs, ALL, 0);
-		ft_kill_proc(&p->prcs, DEAD, cycles_to_die);
+			ft_kill_proc(&p->prcs, ALL, -14, p);
+		ft_kill_proc(&p->prcs, DEAD, cycles_to_die, p);
 		if (ft_live_proc(p->prcs))
 			cycles_to_die = ft_change_cycles(p, cycles_to_die);
 	   	else
@@ -45,19 +45,23 @@ t_champ		ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
 int		ft_change_cycles(t_prog *p, int cycles_to_die)
 {
 	int i;
+	int	flag;
 
 	i = 0;
+	flag = 0;
+	p->checks_nbr++;
 	while(i < p->players)
 	{
-		if (p->lives[i] > NBR_LIVE || ++p->checks_nbr == MAX_CHECKS)
+		if ((p->lives_tot[i] > NBR_LIVE || p->checks_nbr == MAX_CHECKS) && !flag)
 		{
+			flag = 1;
 			cycles_to_die -= CYCLE_DELTA;
 			p->checks_nbr = 0;
-			p->lives[i] = 0;
-			ft_printf("Cycle to die is now %d\n", cycles_to_die);
-			return(cycles_to_die);
+			if (p->verbose & 2)
+				ft_printf("Cycle to die is now %d\n", cycles_to_die);
 		}
 		p->lives[i] = 0;
+		p->lives_tot[i] = 0;
 		i++;
 	}
 	return (cycles_to_die);

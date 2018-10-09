@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 16:39:44 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/09 18:36:41 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct			s_proc {
 	unsigned int		pos;
 	bool				carry;
 	int					player_nbr;
+	int					live_cycle;
 	unsigned char		cmnd;
 	bool				live;
 	unsigned int		reg[16];
@@ -61,6 +62,7 @@ typedef struct			s_prog {
 	int					player_nbr[MAX_PLAYERS];
 	t_champ				champs[MAX_PLAYERS];
 	int					lives[MAX_PLAYERS];
+	int					lives_tot[MAX_PLAYERS];
 	int					players;
 	int					checks_nbr;
 	short				last_live_nbr;
@@ -120,7 +122,7 @@ unsigned char			*ft_memcreator(void);
 void					ft_loadchamp(unsigned char *mem, t_champ *champ, short champ_num, int player_qnt);
 void					ft_memdumper(unsigned char *mem);
 void					ft_print_error(short code);
-void					ft_kill_proc(t_proc **prcs, bool mode, int ctd);
+void					ft_kill_proc(t_proc **prcs, bool mode, int ctd, t_prog *p);
 t_proc					*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt);
 t_proc					*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr, bool carry);
 t_proc					*ft_add_proc(t_proc *prcs, t_proc *newproc);

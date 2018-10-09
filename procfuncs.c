@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 16:53:07 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/09 18:56:29 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_proc	*ft_add_proc(t_proc *prcs, t_proc *newproc)
 	return (prcs);
 }
 
-void	ft_kill_proc(t_proc **prcs, bool mode, int ctd)
+void	ft_kill_proc(t_proc **prcs, bool mode, int ctd, t_prog *p)
 {
 	t_proc *buf;
 	t_proc *prev;
@@ -55,7 +55,9 @@ void	ft_kill_proc(t_proc **prcs, bool mode, int ctd)
 	{
 		if (!buf->live || buf->live == mode)
 		{
-			ft_printf("Process %d hasn't lived for XX cycles (CTD %d)\n", buf->pid, ctd);
+			if	(p->verbose & 8)
+				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", 
+						buf->pid, buf->live_cycle, ctd);
 			if (prev)
 			{
 				prev->next = buf->next;
@@ -104,6 +106,7 @@ void	ft_proc_control(t_proc *prcs, unsigned char *mem, t_prog *p)
 	moves = 1;
 	while(prcs)
 	{
+		prcs->live_cycle++;
 		if (prcs->cycles_to_do > 0)
 			prcs->cycles_to_do--;
 		if (prcs->cycles_to_do == 0)
@@ -153,10 +156,13 @@ t_proc	*ft_copy_proc(t_proc *sample, unsigned int pid, unsigned int pos)
 	newproc->player_nbr = sample->player_nbr;
 	newproc->next = NULL;
 	newproc->cmnd = 0xff;
+	newproc->live = sample->live;
 	newproc->carry = sample->carry;
-	while(i++ < 16)
-		newproc->reg[i] = sample->reg[i];	
-	newproc->reg[0] = (unsigned int)newproc->player_nbr;
+	while(i < 16)
+	{
+		newproc->reg[i] = sample->reg[i];
+		i++;
+	}
 	return (newproc);
 }
 

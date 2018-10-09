@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:10:21 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/05 14:18:41 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/09 18:33:34 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,11 @@ unsigned int				live(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *m
 	t_champ	chmp;
 
 	proc->live = 1;
+	proc->live_cycle = 0;
 	ft_read_mem(&dir, map, 4, ft_check_pos(proc->pos + 1));
 	dir.qbt = ft_swapuint(dir.qbt);
+	num = ft_get_champ_num(g, proc->player_nbr);
+	g->lives_tot[num]++;
 	if (g->verbose & 4)
 		ft_printf("P%5d | live %d\n", proc->pid, dir.qbt);
 	num = ft_get_champ_num(g, dir.qbt);
