@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 18:49:05 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 16:39:49 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 16:35:11 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,24 +22,31 @@ short				ft_read_args(int argc, char **argv, t_prog *p, unsigned char *mem)
 	i = 1;
 	j = 0;
 	res = 0;
-	while (i < argc && res == 0 && j < MAX_PLAYERS)
+	while (i < argc && res == 0)
 	{
 		if (argv[i][0] == '-' && (i + 1) < argc)
 			res = ft_readflag(j, argv, &i, p);
 		else
 		{
-			fd = open(argv[i], O_RDONLY); // ввести отдельную программу открытия которая при ошибке пишет ошибку и закрывает программу.
+			fd = open(argv[i], O_RDONLY);
+			if (fd <= 0)
+			{
+				perror(argv[i]);
+				free(mem);
+				free(p);
+				exit(-1);
+			}
 			res = ft_binvalidator(fd);
-			if (res == 0)
+			if (res == 0 && j < MAX_PLAYERS)
 				ft_binreader(fd, &p->champs[j], j, mem);
 			close(fd);
 			j++;
 		}
 		i++;
 	}
-	if (j == MAX_PLAYERS && i < argc)
+	if (j > MAX_PLAYERS)
 		return (-6);
-	res = res == 0 ? (short)j : res;
+	res = res == 0 ? (short)j : res; // returning number of players
 	return (res);
 }
 
@@ -53,6 +60,7 @@ short				ft_isfile(char *path)
 		close(fd);
 		return (0);
 	}
+	perror(path);
 	return (-1);
 }
 
@@ -67,17 +75,16 @@ short				ft_readflag(int j, char **argv, int *i, t_prog *p)
 		val = (unsigned int)ft_atoi(argv[*i + 1]);
 		if (argv[*i][1] == 'v')
 			p->verbose = val;
-		else if (argv[*i][1] == 'n')
+		else if (argv[*i][1] == 'n' && j < MAX_PLAYERS)
 			p->player_nbr[j]= ft_atoi(argv[*i + 1]);
 		else if (!ft_strcmp(argv[*i], "-dump"))
 			p->nbr_cycles = val;
 		else
-		{
-			if (ft_isfile(argv[*i]))
-				return (-2); //display help
-		}
+			return (ft_isfile(argv[*i]));
 		*i = *i + 1;
 		return (0);
 	}
+	else if (argv[*i][1] == 'v' || argv[*i][1] == 'n' || !ft_strcmp(argv[*i], "-dump"))
+		return (-2);
 	return (ft_isfile(argv[*i]));
 }

@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 15:38:47 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 16:35:09 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 15:13:06 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ short				ft_binvalidator(int fd)
 {
 	unsigned int	mgc_sz;
 	int				res;
-//	int				a;
 
 	res = read(fd, &mgc_sz, 4);
 	mgc_sz = ft_swapuint(mgc_sz);
@@ -38,7 +37,7 @@ short				ft_binvalidator(int fd)
 
 short				ft_validchamp(int fd, unsigned int mgc_sz, int res)
 {
-	union chmp_exec	chmpexec; // union for max size of executive code of champion accessed via unsigned int or unsigned char;
+	union chmp_exec	chmpexec;
 	int 			a;
 	
 	a = 0;
@@ -66,7 +65,6 @@ void	ft_binreader(int fd, t_champ *champs, short champ_num, unsigned char *mem)
 	champs->execsize = ft_swapuint(champs->execsize);
 	read(fd, champs->comm, COMMENT_LENGTH + 4);
 	read(fd, champs->exec.obts, champs->execsize);
-//	ft_loadchamp(mem, champs, champ_num);
 	close(fd);
 }
 

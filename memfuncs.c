@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 15:38:17 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 16:39:20 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 17:21:58 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ void				ft_loadchamp(unsigned char *mem, t_champ *champ, short champ_num, int pl
 	unsigned int	i;
 	unsigned int	j;
 
-	if (player_qnt == 2)
-		j = champ_num * 2048;
-	else
-		j = champ_num * 1024;
+	j = champ_num * MEM_SIZE / player_qnt;
 	i = 0;
 	while (i < champ->execsize)
 		mem[j++] = champ->exec.obts[i++];

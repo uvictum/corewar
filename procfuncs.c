@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/09 18:56:29 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 17:51:58 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ t_proc	*ft_new_proc(unsigned int pid, unsigned int pos, int player_nbr, bool car
 	return (newproc);
 }
 
-t_proc	*ft_add_proc(t_proc *prcs, t_proc *newproc)
+t_proc	*ft_add_proc(t_proc *prcs, t_proc *newproc, t_prog *p)
 {
 	t_proc *buf;
 
+	p->proc_cnt++;
 	if (prcs && newproc)
 	{
 		buf = prcs;
@@ -55,6 +56,7 @@ void	ft_kill_proc(t_proc **prcs, bool mode, int ctd, t_prog *p)
 	{
 		if (!buf->live || buf->live == mode)
 		{
+			p->proc_cnt--;
 			if	(p->verbose & 8)
 				ft_printf("Process %d hasn't lived for %d cycles (CTD %d)\n", 
 						buf->pid, buf->live_cycle, ctd);
@@ -85,15 +87,12 @@ t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
 	t_proc	*prcs;
 	int		amp;
 
-	if (p->players == 2)
-		amp = MEM_SIZE / 2;
-	else
-		amp = MEM_SIZE / 4;
+	amp = MEM_SIZE / p->players;
 	prcs = NULL;
 	i = 0;
 	while (i < player_qnt)
 	{
-		prcs = ft_add_proc(prcs, ft_new_proc((unsigned int)(i + 1), i * amp, p->player_nbr[i], 0));
+		prcs = ft_add_proc(prcs, ft_new_proc((unsigned int)(i + 1), i * amp, p->player_nbr[i], 0), p);
 		i++;
 	}
 	return (prcs);
@@ -165,5 +164,3 @@ t_proc	*ft_copy_proc(t_proc *sample, unsigned int pid, unsigned int pos)
 	}
 	return (newproc);
 }
-
-
