@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 18:49:05 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 16:35:11 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 18:46:21 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ short				ft_read_args(int argc, char **argv, t_prog *p, unsigned char *mem)
 			}
 			res = ft_binvalidator(fd);
 			if (res == 0 && j < MAX_PLAYERS)
-				ft_binreader(fd, &p->champs[j], j, mem);
+				ft_binreader(fd, &p->champs[j]);
 			close(fd);
 			j++;
 		}

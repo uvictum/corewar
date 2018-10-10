@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 15:38:47 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 15:13:06 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 18:47:50 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,8 @@ short				ft_validchamp(int fd, unsigned int mgc_sz, int res)
 	return (-5);   // wrong champ exec size
 }
 
-void	ft_binreader(int fd, t_champ *champs, short champ_num, unsigned char *mem)
+void	ft_binreader(int fd, t_champ *champs)
 {
-	int		a;
-
 	if (lseek(fd, 0, SEEK_CUR) != 4)
 		lseek(fd, 4, SEEK_SET);
 	read(fd, champs->name, PROG_NAME_LENGTH + 4);

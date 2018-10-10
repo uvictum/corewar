@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/05 18:32:26 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 18:56:19 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void check_carry(unsigned int arg, t_proc *proc)
 	proc->carry = arg == 0 ? 1 : 0;
 }
 
-int check_reg(t_proc *proc, unsigned char arg, unsigned int *ret, t_arg_type *type)
+int check_reg(unsigned char arg)
 {
 	int	i;
 
@@ -50,8 +50,6 @@ unsigned int ft_calc_move(t_arg_type *type, t_proc *proc)
 
 unsigned int	 get(t_arg *arg, unsigned char *map, unsigned int size, unsigned int start)
 {
-	short	shrt;
-
 	ft_read_mem(arg, map, size, start);
 	if (size == 2)
 		arg->tbts[0] = ft_swapshrt(arg->tbts[0]);
@@ -72,7 +70,7 @@ unsigned int get_args(t_proc *proc, t_arg *arg, t_arg_type *type, unsigned char 
 		if (type[i] == T_REG)
 		{
 			ret += get(&arg[i], map, T_REG_SIZE, ret);
-			if (!check_reg(proc, (arg[i].obts[0]), &ret, type))
+			if (!check_reg(arg[i].obts[0]))
 				return (0xff);
 			if (i != op_tab[proc->cmnd].arg_qnt - 1 || proc->cmnd == 10)
 				arg[i].qbt = proc->reg[arg[i].obts[0] - 1];

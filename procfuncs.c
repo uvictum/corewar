@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/13 18:40:34 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 17:51:58 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 18:51:00 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	ft_kill_proc(t_proc **prcs, bool mode, int ctd, t_prog *p)
 	}
 }
 
-t_proc	*ft_init_proc(t_prog *p, unsigned char *mem, short player_qnt)
+t_proc	*ft_init_proc(t_prog *p, short player_qnt)
 {
 	short	i;
 	t_proc	*prcs;

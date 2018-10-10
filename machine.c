@@ -6,17 +6,17 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 18:37:15 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 17:32:46 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 18:49:30 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "corewar.h"
 
-int			ft_vmachine(t_prog *p, t_proc *prcs, unsigned char *mem)
+int			ft_vmachine(t_prog *p, unsigned char *mem)
 {
 	int	cycles_to_die;
 	int	curr_round;
-	int	counter;
+	unsigned int	counter;
 
 	counter = 1;
 	cycles_to_die = CYCLE_TO_DIE;

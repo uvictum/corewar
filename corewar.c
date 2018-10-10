@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/11 19:08:07 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 17:44:43 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 18:51:39 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ int		main(int argc, char **argv)
 			ft_printf("* Player %i, weighing %i bytes, \"%s\" (\"%s\") !\n", i + 1, p->champs[i].execsize, p->champs[i].name, p->champs[i].comm);
 			i++;
 		}
-		prcs = ft_init_proc(p, mem, res);
+		prcs = ft_init_proc(p, res);
 		p->lastpid = res;
 		p->prcs = prcs;
-		winner = ft_vmachine(p, prcs, mem);
+		winner = ft_vmachine(p, mem);
 		ft_printf("Contestant %d, \"%s\", has won !\n", winner + 1, p->champs[winner].name);
 	}
 	else

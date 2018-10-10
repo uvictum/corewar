@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:10:21 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/10 17:52:35 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 19:06:07 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ unsigned int				live(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *m
 	int		num;
 	t_champ	chmp;
 
+	(void)type;
 	proc->live = 1;
 	proc->live_cycle = 0;
 	ft_read_mem(&dir, map, 4, ft_check_pos(proc->pos + 1));
@@ -42,6 +43,7 @@ unsigned int				zjmp(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *m
 {
 	t_arg	dir;
 
+	(void)type;
 	ft_read_mem(&dir, map, 2, proc->pos + 1);
 	dir.tbts[0] = ft_swapshrt(dir.tbts[0]);
 	if (g->verbose & 4)
@@ -63,6 +65,7 @@ unsigned int		ft_fork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *
 	t_arg			dir;
 	unsigned int	pos;
 
+	(void)type;
 	g->lastpid++;
 	ft_read_mem(&dir, map, 2, proc->pos + 1);
 	dir.tbts[0] = ft_swapshrt(dir.tbts[0]);
@@ -78,6 +81,7 @@ unsigned int				lfork(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *
 	t_arg	dir;
 	unsigned int	pos;
 
+	(void)type;
 	g->lastpid++;
 	ft_read_mem(&dir, map, 2, proc->pos + 1);
 	dir.tbts[0] = ft_swapshrt(dir.tbts[0]);
@@ -93,6 +97,8 @@ unsigned int aff(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	t_arg			arg;
 	unsigned int	ret;
 	
+	if (!g)
+		return (0);
 	ret = get_args(proc, &arg, type, map);
 	ft_printf("%c", arg.qbt);
 	return (ret);

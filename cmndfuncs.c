@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/05 17:08:49 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/10 18:50:23 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem, t_prog *p)
 {
 	unsigned int	start;
-	int				i;
+	unsigned int	i;
 
 	i = 0;
 	start = prcs->pos;
