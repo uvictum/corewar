@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/12 15:56:30 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 18:54:34 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/24 19:39:34 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ typedef struct			s_prog {
 	int					players;
 	int					checks_nbr;
 	short				last_live_nbr;
+	short				vis;
 	t_proc				*prcs;
 	unsigned int		lastpid;
 	unsigned int		proc_cnt;

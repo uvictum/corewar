@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 18:49:05 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 18:46:21 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/24 20:06:52 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ short				ft_readflag(int j, char **argv, int *i, t_prog *p)
 	if (ft_isnum(argv[*i + 1]))
 	{
 		val = (unsigned int)ft_atoi(argv[*i + 1]);
-		if (argv[*i][1] == 'v')
+		if (argv[*i][1] == 'v' && argv[*i][2] == '\0')
 			p->verbose = val;
-		else if (argv[*i][1] == 'n' && j < MAX_PLAYERS)
+		else if (argv[*i][1] == 'n' && j < MAX_PLAYERS && argv[*i][2] == '\0')
 			p->player_nbr[j]= ft_atoi(argv[*i + 1]);
 		else if (!ft_strcmp(argv[*i], "-dump"))
 			p->nbr_cycles = val;
@@ -84,7 +84,13 @@ short				ft_readflag(int j, char **argv, int *i, t_prog *p)
 		*i = *i + 1;
 		return (0);
 	}
-	else if (argv[*i][1] == 'v' || argv[*i][1] == 'n' || !ft_strcmp(argv[*i], "-dump"))
+	else if (argv[*i][1] == 'V')
+	{
+		p->vis = 1;
+		return (0);
+	}
+	else if (argv[*i][1] == 'v' || argv[*i][1] == 'n' 
+			|| !ft_strcmp(argv[*i], "-dump") || argv[*i][1] == 'V')
 		return (-2);
 	return (ft_isfile(argv[*i]));
 }
