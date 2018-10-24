@@ -1,6 +1,6 @@
-CC= gcc
+CC= clang
 
-CFLAGS=  -Wall -Wextra -Werror -I. -Ilib
+CFLAGS=  -Wall -Wextra -Werror -g -I. -Ilib
 
 NAME = corewar
 

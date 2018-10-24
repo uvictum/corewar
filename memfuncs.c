@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/07 15:38:17 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 17:21:58 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/18 18:15:10 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ void				ft_memdumper(unsigned char *mem)
 		if ((i % 64) == 0)
 		{
 			if (i != 0)
-				ft_printf("\n");
-			ft_printf("%#.4x : ", i);
+				ft_printf("\n%#.4x : ", i);
+			else
+				ft_printf("0x0000 : ");
 		}
 		ft_printf("%.2x ", (unsigned int)mem[i]);
 		i++;

@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/26 15:07:17 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/05 17:01:28 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/24 19:15:48 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ unsigned int		st(t_proc *proc, t_prog *g, t_arg_type *type, unsigned char *map)
 	ft_read_mem(&r, map, 1, proc->pos + 2);
 	if (type[1] == T_IND)
 	{
+		args[0].qbt = ft_swapuint(args[0].qbt);
 		ft_write_mem(&args[0], map, T_IND, proc->pos + (args[1].tbts[0] % IDX_MOD));
 		if (g->verbose & 4)
 			ft_printf("P%5d | st r%d %d\n", proc->pid, r.obts[0], args[1].tbts[0]);

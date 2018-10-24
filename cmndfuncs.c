@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/18 16:17:36 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/10 18:50:23 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/24 19:20:44 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	ft_move_proc(t_proc *prcs, unsigned int move, unsigned char *mem, t_prog *p
 		prcs->pos -= MEM_SIZE;
 	if (move > 1 && p->verbose & 16)
 	{
-		ft_printf("ADV %u (%#.4x -> %#.4x) ", move, start, prcs->pos);
+		if (start != 0)
+			ft_printf("ADV %u (%#.4x -> %#.4x) ", move, start, prcs->pos);
+		else
+			ft_printf("ADV %u (0x0000 -> %#.4x) ", move, prcs->pos);
 		while (i < move)
 		{
 			ft_printf("%.2x ", mem[ft_check_pos(start + i)]);
