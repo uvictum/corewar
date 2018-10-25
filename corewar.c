@@ -6,7 +6,7 @@
 /*   By: vmorguno <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/11 19:08:07 by vmorguno          #+#    #+#             */
-/*   Updated: 2018/10/18 18:28:23 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/25 16:55:58 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int		main(int argc, char **argv)
 		p->lastpid = res;
 		p->prcs = prcs;
 		winner = ft_vmachine(p, mem);
-		ft_printf("Contestant %d, \"%s\", has won !\n", winner + 1, p->champs[winner].name);
+		if (p->nbr_cycles == MAX_INT)
+			ft_printf("Contestant %d, \"%s\", has won !\n", winner + 1, p->champs[winner].name);
 	}
 	else
 		ft_print_error(res, &p, &mem);

@@ -6,7 +6,7 @@
 /*   By: gdanylov <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/14 05:24:24 by gdanylov          #+#    #+#             */
-/*   Updated: 2018/10/24 18:25:55 by vmorguno         ###   ########.fr       */
+/*   Updated: 2018/10/25 16:44:10 by vmorguno         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int check_reg(unsigned char arg)
 	int	i;
 
 	i = 0;
-	if (arg > 0 && arg < 16)
+	if (arg > 0 && arg <= 16)
 		return (1);
 	else
 		return (0);
